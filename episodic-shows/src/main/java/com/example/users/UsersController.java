@@ -13,6 +13,12 @@ public class UsersController {
     this.repository = repository;
   }
 
+  @GetMapping("")
+  public Iterable<User> all() {
+    Iterable<User> users = this.repository.findAll();
+    return users;
+  }
+
   @PostMapping("")
   public User create(@RequestBody User user) {
     return this.repository.save(user);
