@@ -1,11 +1,6 @@
 package com.example.users;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.util.DigestUtils;
-
 import javax.persistence.*;
-import java.util.Map;
 
 @Entity(name = "users")
 public class User {
