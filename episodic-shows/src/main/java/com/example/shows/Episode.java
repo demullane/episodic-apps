@@ -1,8 +1,11 @@
 package com.example.shows;
 
+import com.example.viewings.Viewing;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "episodes")
 public class Episode {

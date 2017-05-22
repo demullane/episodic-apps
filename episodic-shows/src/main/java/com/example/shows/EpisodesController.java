@@ -12,7 +12,7 @@ public class EpisodesController {
 
   @GetMapping("")
   public Iterable<Episode> all(@PathVariable Long id) {
-    return this.repository.findByShowId(id);
+    return repository.findByShowId(id);
   }
 
   @PostMapping("")

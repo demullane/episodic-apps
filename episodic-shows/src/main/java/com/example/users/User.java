@@ -1,6 +1,9 @@
 package com.example.users;
+import com.example.viewings.Viewing;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "users")
 public class User {
