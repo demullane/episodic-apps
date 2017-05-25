@@ -1,11 +1,10 @@
 package com.example.viewings;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity(name = "viewings")
 public class Viewing {
@@ -15,8 +14,9 @@ public class Viewing {
   private Long id;
   private Long userId;
   private Long showId;
+  @JsonIgnore
   private Long episodeId;
-  private Date updatedAt;
+  private LocalDateTime updatedAt;
   private int timecode;
 
   public Viewing() {};
@@ -37,12 +37,12 @@ public class Viewing {
   @JsonIgnore
   public Long getEpisodeId() { return episodeId; }
 
+  @JsonProperty
   public void setEpisodeId(Long episodeId) { this.episodeId = episodeId; }
 
-//  @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
-  public Date getUpdatedAt() { return updatedAt; }
+  public LocalDateTime getUpdatedAt() { return updatedAt; }
 
-  public void setUpdatedAt(Date updatedAt) { this.updatedAt = updatedAt; }
+  public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 
   public int getTimecode() { return timecode; }
 

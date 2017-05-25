@@ -1,5 +1,6 @@
 package com.example.shows;
 
+import com.example.users.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.util.HashMap;
@@ -95,17 +98,22 @@ public class EpisodesControllerTest {
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON);
 
+//    MvcResult result = this.mvc.perform(request).andReturn();
+//    String content = result.getResponse().getContentAsString();
+//    String blah = "blah";
+
     this.mvc.perform(request)
         .andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(2)))
-        .andExpect(jsonPath("$[0].id", equalTo(episode1.getId().intValue())))
-        .andExpect(jsonPath("$[0].seasonNumber", equalTo(episode1.getSeasonNumber())))
-        .andExpect(jsonPath("$[0].episodeNumber", equalTo(episode1.getEpisodeNumber())))
-        .andExpect(jsonPath("$[0].title", equalTo(episode1.getTitle())))
+        .andExpect(jsonPath("$[0].id", equalTo(episode2.getId().intValue())))
+        .andExpect(jsonPath("$[0].seasonNumber", equalTo(episode2.getSeasonNumber())))
+        .andExpect(jsonPath("$[0].episodeNumber", equalTo(episode2.getEpisodeNumber())))
+        .andExpect(jsonPath("$[0].title", equalTo(episode2.getTitle())))
         .andExpect(jsonPath("$[0].showId").doesNotExist())
-        .andExpect(jsonPath("$[1].seasonNumber", equalTo(episode2.getSeasonNumber())))
-        .andExpect(jsonPath("$[1].episodeNumber", equalTo(episode2.getEpisodeNumber())))
-        .andExpect(jsonPath("$[1].title", equalTo(episode2.getTitle())))
+        .andExpect(jsonPath("$[1].id", equalTo(episode1.getId().intValue())))
+        .andExpect(jsonPath("$[1].seasonNumber", equalTo(episode1.getSeasonNumber())))
+        .andExpect(jsonPath("$[1].episodeNumber", equalTo(episode1.getEpisodeNumber())))
+        .andExpect(jsonPath("$[1].title", equalTo(episode1.getTitle())))
         .andExpect(jsonPath("$[1].showId").doesNotExist());
   }
 

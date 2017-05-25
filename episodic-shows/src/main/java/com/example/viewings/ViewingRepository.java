@@ -4,4 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ViewingRepository extends CrudRepository<Viewing, Long> {
   Viewing findByUserIdAndShowId(Long userId, Long showId);
+  Iterable<Viewing> findByUserId(Long userId);
 }

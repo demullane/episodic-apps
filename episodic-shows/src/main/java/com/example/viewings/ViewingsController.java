@@ -6,9 +6,12 @@ import com.example.shows.Show;
 import com.example.shows.ShowRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static java.lang.Math.toIntExact;
 
 @RestController
 @RequestMapping("/users/{id}")
@@ -28,13 +31,19 @@ public class ViewingsController {
 
   @GetMapping("/recently-watched")
   public List<ViewingWrapper> all(@PathVariable Long id) {
-    Iterable<Viewing> viewings = repository.findAll();
+    Iterable<Episode> episodes = episodeRepository.findAll();
+    Map<Integer, Episode> episodeMap = new HashMap<>();
+    for (Episode e : episodes) {
+      episodeMap.put(toIntExact(e.getId()), e);
+    }
+
+    Iterable<Viewing> viewings = repository.findByUserId(id);
     List<ViewingWrapper> wrappedViewings = new ArrayList<ViewingWrapper>();
-    for (Viewing viewing : viewings) {
-      Show show = showRepository.findOne(viewing.getShowId());
-      Episode episode = episodeRepository.findOne(viewing.getEpisodeId());
-      Date updatedAt = viewing.getUpdatedAt();
-      int timecode = viewing.getTimecode();
+    for (Viewing v : viewings) {
+      Episode episode = episodeMap.get(toIntExact(v.getEpisodeId()));
+      Show show = showRepository.findOne(episode.getShowId());
+      LocalDateTime updatedAt = v.getUpdatedAt();
+      int timecode = v.getTimecode();
       ViewingWrapper viewingWrapper = new ViewingWrapper(show, episode, updatedAt, timecode);
       wrappedViewings.add(viewingWrapper);
     }
@@ -61,19 +70,3 @@ public class ViewingsController {
     }
   }
 }
-
-//for final endpoint on shows api
-//
-// turn it into a hashmap, key off of the id
-//  Map<Integer, Episode> episodeMap = new HashMap<>();
-//  for (Episode e : episodes) {
-//    episodeMap.put(e.id, e);
-//  }
-//
-//  Map<Integer, Episode> episodeMap = episodes
-//    .stream()
-//    .collect(Collectors.toMap(e -> e.id, Function.identity()));
-//
-//  for (Viewing v : viewings) {
-//    episodeMap.get(v.episodeId);
-//  }
